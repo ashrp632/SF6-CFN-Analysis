@@ -1,7 +1,5 @@
 import requests
 import pandas as pd
-import json
-import os
 
 def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '36', max_pages = 2):
     headers = {'Cookie': 'cookiesHere',
@@ -100,5 +98,5 @@ if __name__ == "__main__":
     characterID = 'luke'
     characterFilter = 1 #1 doesn't specify a character and only goes by rank instead. 4 does specify a character, meaning you will only get data on that character.
     leagueRank = 36 #This corresponds to master rank. 35 corresponds to diamond 5. 34 corresponds to diamond 4 and so on.
-    pageNum = 1 
+    pageNum = 100 
     cfnRanks(urlToken, characterID, characterFilter, leagueRank, pageNum)
