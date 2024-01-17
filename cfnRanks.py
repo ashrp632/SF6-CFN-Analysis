@@ -4,7 +4,7 @@ import json
 import os
 
 def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '36', max_pages = 2):
-    headers = {'Cookie': 'buckler_r_id=d4b73cd7-9371-423a-93b8-c2c07fca0d0b; buckler_id=sdCzchrDMI9MkaR_HD7KOkuCM4_F1srjp7kyjso6cf0iuDLTbDyCZIaP8UZdn7Oq; buckler_praise_date=1705501718562',
+    headers = {'Cookie': 'cookiesHere',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Host': 'www.streetfighter.com',}
 
@@ -55,7 +55,7 @@ def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '
     #to another page. This allows us to get 20 more players.
 
     while pageNum < maxPage:
-        
+
         url = 'https://www.streetfighter.com/6/buckler/_next/data/{}/en/ranking/league.json?character_filter={}&character_id={}&platform=1&user_status=1&home_filter=1&home_category_id=0&home_id=1&league_rank={}&page={}'.format(urlToken, characterFilter, characterID, leagueRank, pageNum)
         response = requests.get(url=url, headers = headers)
         jsonText = response.json()
@@ -91,12 +91,12 @@ def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '
                                         'fighter_banner_info.home_name',
                                         'fighter_banner_info.max_content_play_time.play_time'
                                         ]]
-        df.to_csv('C:/Users/ashrp/Documents/SideProjects/master.csv', index=False, header=False)
+        df.to_csv('master.csv', index=False, header=False)
         
         pageNum += 1
 
 if __name__ == "__main__":
-    urlToken = "8oIEgbWL-bru1udjO0sqL" #You can get this by going to en.json in network browser console and looking at the URL.
+    urlToken = "AAAAAAAA-BBBBBBBBBBBB" #You can get this by going to en.json in network browser console and looking at the URL.
     characterID = 'luke'
     characterFilter = 1 #1 doesn't specify a character and only goes by rank instead. 4 does specify a character, meaning you will only get data on that character.
     leagueRank = 36 #This corresponds to master rank. 35 corresponds to diamond 5. 34 corresponds to diamond 4 and so on.
