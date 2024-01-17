@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import os
 
-def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '36', page_num = '1'):
+def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '36', max_pages = 2):
     headers = {'Cookie': 'buckler_r_id=d4b73cd7-9371-423a-93b8-c2c07fca0d0b; buckler_id=sdCzchrDMI9MkaR_HD7KOkuCM4_F1srjp7kyjso6cf0iuDLTbDyCZIaP8UZdn7Oq; buckler_praise_date=1705501718562',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Host': 'www.streetfighter.com',}
@@ -15,7 +15,7 @@ def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '
     characterID = character_id
     characterFilter = character_filter #1 doesn't specify a character and only goes by rank instead. 4 does specify a character, meaning you will only get data on that character.
     leagueRank = league_rank #This corresponds to master rank. 35 corresponds to diamond 5. 34 corresponds to diamond 4 and so on.
-    pageNum = page_num #You will need pageNum in order to parse through multiple pages. These json docs only has the info of 20 players at a time.
+    pageNum = 1 #You will need pageNum in order to parse through multiple pages. These json docs only has the info of 20 players at a time.
     df = pd.DataFrame()
     dfLoc = pd.DataFrame()
     dfHome = pd.DataFrame()
@@ -49,13 +49,14 @@ def cfnRanks(key, character_id = 'luke', character_filter = '1', league_rank = '
     print(maxPages)
     print(maxPlayers)
 
-    maxPage = 2
+    maxPage = max_pages
 
     #This is the value of the page in the json doc. Making it a dynamic parameter here allows us to change the json doc players
     #to another page. This allows us to get 20 more players.
 
     while pageNum < maxPage:
         
+        url = 'https://www.streetfighter.com/6/buckler/_next/data/{}/en/ranking/league.json?character_filter={}&character_id={}&platform=1&user_status=1&home_filter=1&home_category_id=0&home_id=1&league_rank={}&page={}'.format(urlToken, characterFilter, characterID, leagueRank, pageNum)
         response = requests.get(url=url, headers = headers)
         jsonText = response.json()
         
